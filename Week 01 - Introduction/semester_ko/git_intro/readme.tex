@@ -1,0 +1,338 @@
+% !TeX spellcheck = en_GB
+\documentclass[a4paper, 11pt]{article}
+\usepackage{layouts} % Feel free to remove this one
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[backend=biber, sortcites, citestyle=numeric]{biblatex}
+\usepackage{dirtree}
+\usepackage[tt=false]{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[top=1in, bottom=1in, left=1.6in, right=1.6in]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{siunitx-v2}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+
+\addbibresource{references.bib}
+
+\numberwithin{equation}{section}
+
+\DeclareCaptionFormat{custom}
+{%
+	{\sf\footnotesize\textbf{#1#2}{#3}}
+}
+\captionsetup{format=custom}
+
+% Margin paragraphs
+\let\oldmarginpar\marginpar
+\setlength\marginparwidth{3cm}
+\renewcommand{\marginpar}[1]{\oldmarginpar{\flushleft\tiny\sf{#1}}}
+
+% Colors
+\definecolor{primary}{HTML}{5080da}
+\definecolor{secondary}{HTML}{da8050}
+
+% tikz definitions
+\tikzset{leaf node/.style = {rectangle, draw=black, minimum width = 0.5cm, minimum height = 0.5cm}}
+\tikzset{internal node/.style = {circle, draw=black, minimum width = 0.5cm}}
+
+% Theorems
+\newtcbtheorem{definition}{Definition}{colback=primary!5, colframe=primary, fonttitle=\bfseries}{def}
+\newtcbtheorem{alert}{Alert}{colback=secondary!5, colframe=secondary, fonttitle=\bfseries}{alert}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[section]
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Custom commands
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\hint}{\textit{Hint:}~}
+\newcommand{\inlcd}[1]{\lstinline[language=Python]{#1}}
+\newcommand{\ttus}{\char`_}
+
+% inline code blocks
+\newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
+
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
+	left=2pt, bottom=2pt, right=2pt, colback=gray!25, colframe=white,
+	fontupper={\ttfamily\mystrut}}
+
+\title{A Really Brief Introduction To Git\\{\normalsize Git ready\ldots}}
+\author{V. Markos\\{\normalsize Mediterranean College}}
+\date{\today}
+
+\begin{document}
+	%
+	\maketitle
+	%
+	\begin{abstract}
+		In this really brief tutorial, we present the key features of Git, a (the?) code versioning tool you should use in all your coding assignments. We present a brief use case about an incredibly cool project you should know about.
+	\end{abstract}
+	%
+	%
+	%
+	\section{Introduction}
+	%
+	How often does one of your projects look like this?%
+	
+	\dirtree{%
+		.1 project-X. 
+		.2 first-version. 
+		.3 main.py. 
+		.3 utils.py. 
+		.3 readme.md.  
+		.2 better-version. 
+		.3 main.py.
+		.3 utils.py.  
+		.3 read.me. 
+		.2 just-one-bug. 
+		.3 main.py. 
+		.3 main01.py. 
+		.3 main02.py. 
+		.2 sos. 
+		.3 all.py. 
+	}
+	
+	If\marginpar{Git should not be confused with online code repositories like Github or Gitlab. All project management comes with Git. Online code repositories are just a cloud solution that allows your code to be shared there (plus whatever on top of that they have to offer).} this is the case most of the times, then you are probably in need of a good version control tool, like Git. With Git you can have full control over what you do on a project, access to its full change history and a lot of cool stuff\footnote{Coolness is subjective, but, well, why should Git not be cool?}. Moreover, Git facilitates project sharing, collaboration and much more you will get to know as you use and explore Git.
+	%
+	\section{Installation}\label{sec:Installation}
+	%
+	Git is too easy to install not have it on your machines, even if you are using Windows. So, let's have a quick look over the various installation methods.
+	%
+	%
+	%
+	\subsection{Linux and the like}\label{subsec:Linux installation}
+	%
+	In most Linux / Unix distributions, Git is accessible via the system's package manager, so you can install it via terminal directly. For instance, in Debian--based distributions, just run:
+	\begin{lstlisting}[language=bash]
+apt-get install git	\end{lstlisting}
+	Similarly, for Arch you would use:
+	\begin{lstlisting}[language=bash]
+pacman -S git\end{lstlisting}
+	You can find more for other Linux distributions at the official manual page for Git: \href{https://git-scm.com/downloads/linux}{https://git-scm.com/downloads/linux}.
+	%
+	%
+	%
+	\subsection{macOS}\label{subsec:macos installation}
+	%
+	Typically, Git is shipped alongside \code{Xcode}, so you might need to do nothing to get it. However, you can easily \code{brew} Git as with most packages with:
+	\begin{lstlisting}
+brew install git\end{lstlisting}
+	For more: \href{https://git-scm.com/downloads/mac}{https://git-scm.com/downloads/mac}.
+	%
+	%
+	%
+	\subsection{Windows}\label{subsec:Windows installation}
+	%
+	On Windows, you can either use \code{winget} to install git on your machine (you have to get winget, as it is not shipped with Windows) or download one of the Windows installers available at\footnote{With Windows, you are also given the option to install any Linux distribution and let Windows evacuate your machine.}: \href{https://git-scm.com/downloads/win}{https://git-scm.com/downloads/win}.
+	%
+	%
+	%
+	\section{Using Git}\label{sec:Using git}
+	%
+	Having installed git, we shall now present a really brief tutorial on how to use it. We shall use the incredibly important \code{git-demo} public repository found at: \href{https://github.com/vmarkos-mc/git-demo}{https://github.com/vmarkos-mc/git-demo}.
+	%
+	%
+	%
+	\subsection{Pulling the project}\label{subsec:git pull}
+	%
+	Suppose you want to get this all--important project. To do so, create a directory, let's say \code{git-demo}, and move into it. Open a terminal session there and type\footnote{On Windows, ``terminal'' is called ``cmd'' or ``powershell'' (thery are not the same), but we shall stick to Linux terminology here, just because.}:
+	\begin{lstlisting}
+git init .\end{lstlisting}
+	This\marginpar{You could think of Git as a friend that is there, keeping track of everything you do in a relatively clever way, much like a chief minister for your project.} command initialises a Git repository in the directory you are calling it, indicated here by that tiny \code{.}. This means that now Git is there, watching you and your files, ready to serve you at your request. You might notice that all this is accomplished by creating a hidden \code{.git} directory in your project directory, which is where Git actually lives for this project. Deleting this directory \emph{removes Git from this project,} so, be wise with your choices.
+	
+	So far, we have a Git repository set up in our project, but not the actual project. To do so, just run from your project directory:
+	\begin{lstlisting}
+git pull https://github.com/vmarkos-mc/git-demo.git\end{lstlisting}
+	This will most probably print something like this:
+	\begin{lstlisting}
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 11 (delta 0), reused 11 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (11/11), 3.34 KiB | 684.00 KiB/s, done.
+From https://github.com/vmarkos-mc/git-demo
+* branch            HEAD       -> FETCH_HEAD\end{lstlisting}
+	This means that all stuff has been correctly copied into your local directory, so, congratulations, you have just made your first Git pull! Now you can browse around the files you have just downloaded and see the all--precious code included in this project.
+	%
+	%
+	%
+	\subsection{Ignoring}\label{subsec:git ignore}
+	%
+	After having the necessary amount of fun, you might observe that the files included are (run \code{ls -al} on Linux bash for this output):
+	\begin{lstlisting}
+total 28
+drwxr-xr-x 3 bill bill 4096 Oct  6 09:33 .
+drwxr-xr-x 4 bill bill 4096 Oct  6 09:41 ..
+drwxr-xr-x 8 bill bill 4096 Oct  6 09:33 .git
+-rw-r--r-- 1 bill bill   80 Oct  6 09:33 .gitignore
+-rw-r--r-- 1 bill bill 1066 Oct  6 09:33 main.py
+-rw-r--r-- 1 bill bill  120 Oct  6 09:33 requirements.txt
+-rw-r--r-- 1 bill bill 1095 Oct  6 09:33 utils.py\end{lstlisting}
+	Besides the first three entries, corresponding to directories, and the two python files, \code{main.py} and \code{utils.py}, containing, most probably, the main project entry point and project utilities, respectively, there are those two alarmingly named files:
+	\begin{itemize}
+		\item \code{requirements.txt}, and;
+		\item \code{.gitignore}.
+	\end{itemize}
+	The contents of \code{requirements.txt} look as follows:
+	\lstinputlisting{git-demo/requirements.txt}
+	This file contains some project requirements, as one might suspect. You can run \code{pip[3] install -r requirements.txt} to install all these project dependencies but this will, most probably, install them system wide. While this might not concern you, it is, in general, a good practice to create local environments to install libraries you need for your projects. In the case of Python projects, you can use \code{venv} to do so.
+	
+	But, WAIT! Doing so will create a local directory in your project, with tons of Python files and libraries that you would most probably not want to share with others, since they can just fetch those from Python's package manager locally. So, you need a way to tell Git about this, and the mysterious \code{.gitignore} serves exactly this purpose. A quick look into it yields\footnote{There is nothing special in starting a directory exclusion rule with a forward slash or not, since all paths are interpreted relatively to Git's directory for this project. This has been used here just for demonstration purposes.}:
+	\lstinputlisting[language=bash]{git-demo/.gitignore}
+	To begin with, lines starting with \code{\#} correspond to comments, so can be safely ignored. Beyond comments, there are two lines included into this file, corresponding to two directories:
+	\begin{itemize}
+		\item \code{/demo-venv/} informs Git to ignore the entire directory \code{demo-venv}.
+		\item \code{\ttus\ttus pychache\ttus\ttus/} informs Git to ignore the \code{\ttus\ttus pycache\ttus\ttus} directory.
+	\end{itemize}
+	All\marginpar{Git does not create ignore files, so you have to do it on your own. On Windows, this might require some tweak, since a file with just an extension and no file name might not be permitted by the operating system.} directories and file paths included in a \code{.gitignore} file are relative to the location of the file, which should be placed in the same directory as the \code{.git} directory, typically the project's main directory.
+	%
+	%
+	%
+	\subsection{Changing}\label{subsec:making changes}
+	%
+	Let us make some minor changes in our project. To begin with, observe that the \code{utils.Segment} class offers a length computation feature, which the existing project does not utilise. So, why not add this to \code{main.py} for demonstration purposes? We make the following changes in it:
+	
+	\lstinputlisting[language=Python, caption={Just a minor change to \code{main.py}, by adding line 45.}, label={lst:main.py}]{git-demo/main.py}
+	
+	Now, observe that there is also no \code{readme.md} file, informing users about the purpose and coolness of this project. So, why not create one? We can create it and add the following contents:
+	
+	\lstinputlisting[caption={A simple readme file, demonstrating the coolness of this project.}, label={lst:readme}]{git-demo/readme.md}
+	
+	Then, we have to somehow inform Git about the changes we have made, and then commit them. Prior to that, we should tell Git who we are, by configuring our user information:
+	\begin{lstlisting}
+git config user.name "Your user name"
+git config user.email "your@email.com"\end{lstlisting}
+	If you are confident enough that you will be using the same credentials on all projects, you can utillise the \code{{-}-global} flag:
+	\begin{lstlisting}
+git config --global user.name "Your user name"
+git config --global user.email "your@email.com"\end{lstlisting}
+
+	Now, since we have made changes to a third--party project, we should first create a new branch and add our new feature to it. To create a new branch, we can use:
+	\begin{lstlisting}
+git checkout -b add-length\end{lstlisting}
+	This should print something like that:
+	\begin{lstlisting}
+Switched to a new branch 'add-length'\end{lstlisting}
+	Now, you can add your changes by using:
+	\begin{lstlisting}
+git add .\end{lstlisting}
+	This adds all changed files to Git, allowing it to track them. Next, you have to \emph{commit the changes to the local repository:}
+	\begin{lstlisting}
+git commit -m "Add readme"\end{lstlisting}
+	This should print something like that:
+	\begin{lstlisting}
+[add-length 8273e96] Add readme
+3 files changed, 9 insertions(+), 1 deletion(-)
+create mode 100644 readme.md\end{lstlisting}
+	Git informs us that it has successfully updated any changes to the local repository, also providing the short version of the commit hash value (\code{8273e96}). If we wish to further work locally and then commit, we can repeat the same process --- without creating a new branch each time --- and then proceed to push our changes to the remote repository. To do so, we run:
+	\begin{lstlisting}
+git push -u origin add-length\end{lstlisting}
+	This pushes any changes made to the remote repository (under the name of \code{origin} here) to the new branch \code{add-length}. The remote repository \code{origin} corresponds to the source url from which this repository has been cloned. In case you want to change it or add more remote resources, you can do so by using \code{git remote add <name> <source>} to add and \code{git remote remove <name>} to remove a remote resource.
+	%
+	%
+	%
+	\section{Merging}\label{subsec:merge}
+	%
+	Assume now that we want to merge changes from our new feature branch, we can do so by pulling that branch, e.g., from the remote repository directly to our local repository. Before doing so, we should first check the branch we are at:
+	\begin{lstlisting}
+git status\end{lstlisting}
+	This should print something like the following:
+	\begin{lstlisting}
+On branch add-length
+Your branch is up to date with 'origin/add-length'.
+
+nothing to commit, working tree clean\end{lstlisting}
+	Things\marginpar{The main branch on a git repository is typically named either \code{master} or \code{main}. The Git default is \code{master}, which you can change to your liking.} are in place, except for our being on the wrong branch. To change back to the \code{main} branch, we can just checkout this branch:
+	\begin{lstlisting}
+git checkout main\end{lstlisting}
+	This should print:
+	\begin{lstlisting}
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.\end{lstlisting}
+	Now, we can merge changes from \code{add-length} by just running:
+	\begin{lstlisting}
+git pull origin add-length\end{lstlisting}
+	Running now \code{git status} will will print the following:
+	\begin{lstlisting}
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+(use ``git push'' to publish your local commits)
+
+nothing to commit, working tree clean\end{lstlisting}
+	All things have been properly updated, so it remains to push changes to the \code{main} branch. To do so, we run:
+	\begin{lstlisting}
+git push -u origin main\end{lstlisting}
+	You can verify that things are up to date by peeking at the logs Git keeps for you:
+	\begin{lstlisting}
+git log\end{lstlisting}	
+	This should print something like:
+	\begin{lstlisting}
+commit 8273e966c4579d4a64af2a4da302eec28a77afcb (HEAD -> main, origin/main, origin/add-length, add-length)
+Author: vmarkos-mc <v.markos@mc-class.gr>
+Date:   Mon Oct 6 11:46:02 2025 +0300
+
+Add readme
+
+commit 00901cd9d2f2a3b23101a2e98c1f5066db8a38b8
+Author: bill <vassileiosmarkos@gmail.com>
+Date:   Mon Oct 6 09:27:17 2025 +0300
+
+Remove python cache files
+
+commit 39e4ce99001bd12f9f6c362723b34559b31e4930
+Author: bill <vassileiosmarkos@gmail.com>
+Date:   Mon Oct 6 09:26:07 2025 +0300
+
+Initial commit\end{lstlisting}
+	So, all history is actually there, kept safely by your next best friend, Git.
+	%
+	%
+	%
+	\section{Conclusions}\label{sec:Conclusions}
+	%
+	Use Git. Just that.
+	%
+	%
+	%
+	\nocite{*}
+	\printbibliography
+	%
+	%
+	%
+\end{document}
+

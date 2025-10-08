@@ -1,0 +1,113 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{fitria2024capitalization}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=2e51d5301b940fa9c021e782b55af9dc}{%
+           family={Fitria},
+           familyi={F\bibinitperiod},
+           given={Tira\bibnamedelima Nur},
+           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \strng{namehash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{fullhash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{fullhashraw}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{bibnamehash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{authorbibnamehash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{authornamehash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{authorfullhash}{2e51d5301b940fa9c021e782b55af9dc}
+      \strng{authorfullhashraw}{2e51d5301b940fa9c021e782b55af9dc}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Humanity Studies (IJHS)}
+      \field{number}{1}
+      \field{title}{CAPITALIZATION ERRORS FOUND IN THE TITLE OF ENGLISH ARTICLES PUBLISHED IN SELECTED JOURNALS}
+      \field{volume}{8}
+      \field{year}{2024}
+      \field{pages}{1\bibrangedash 12}
+      \range{pages}{12}
+    \endentry
+    \entry{Lupton2024-ik}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=749974266e5c2709146aec737f3e6a2b}{%
+           family={Lupton},
+           familyi={L\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Chronicle Books LLC}%
+      }
+      \strng{namehash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{fullhash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{fullhashraw}{749974266e5c2709146aec737f3e6a2b}
+      \strng{bibnamehash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{authorbibnamehash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{authornamehash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{authorfullhash}{749974266e5c2709146aec737f3e6a2b}
+      \strng{authorfullhashraw}{749974266e5c2709146aec737f3e6a2b}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Thinking with Type: A Critical Guide for Designers, Writers, Editors, and Students (3rd Edition, Revised and Expanded)}
+      \field{year}{2024}
+    \endentry
+    \entry{tufte2001}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=41187f886abb9d98f33e5b3f52276d12}{%
+           family={Tufte},
+           familyi={T\bibinitperiod},
+           given={Edward\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Second edition. Cheshire, Conn. : Graphics Press, [2001] {©}2001}%
+      }
+      \strng{namehash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{fullhash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{fullhashraw}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{bibnamehash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{authorbibnamehash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{authornamehash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{authorfullhash}{41187f886abb9d98f33e5b3f52276d12}
+      \strng{authorfullhashraw}{41187f886abb9d98f33e5b3f52276d12}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{197 pages : illustrations (some color), maps (some color) ; 28 cm}
+      \field{note}{Includes index.}
+      \field{title}{The visual display of quantitative information}
+      \field{year}{2001}
+      \verb{urlraw}
+      \verb https://search.library.wisc.edu/catalog/999913808702121
+      \endverb
+      \verb{url}
+      \verb https://search.library.wisc.edu/catalog/999913808702121
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,249 @@
+% !TeX spellcheck = en_GB
+\documentclass[a4paper, 11pt]{article}
+\usepackage{layouts} % Feel free to remove this one
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[backend=biber, sortcites, citestyle=numeric]{biblatex}
+\usepackage[tt=false]{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage[top=1in, bottom=1in, left=1.6in, right=1.6in]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{siunitx-v2}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+
+\addbibresource{references.bib}
+
+\numberwithin{equation}{section}
+
+\DeclareCaptionFormat{custom}
+{%
+	{\sf\footnotesize\textbf{#1#2}{#3}}
+}
+\captionsetup{format=custom}
+
+% Margin paragraphs
+\let\oldmarginpar\marginpar
+\setlength\marginparwidth{3cm}
+\renewcommand{\marginpar}[1]{\oldmarginpar{\flushleft\tiny\sf{#1}}}
+
+% Colors
+\definecolor{primary}{HTML}{5080da}
+\definecolor{secondary}{HTML}{da8050}
+
+% tikz definitions
+\tikzset{leaf node/.style = {rectangle, draw=black, minimum width = 0.5cm, minimum height = 0.5cm}}
+\tikzset{internal node/.style = {circle, draw=black, minimum width = 0.5cm}}
+
+% Theorems
+\newtcbtheorem{definition}{Definition}{colback=primary!5, colframe=primary, fonttitle=\bfseries}{def}
+\newtcbtheorem{alert}{Alert}{colback=secondary!5, colframe=secondary, fonttitle=\bfseries}{alert}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[section]
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Custom commands
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\hint}{\textit{Hint:}~}
+\newcommand{\inlcd}[1]{\lstinline[language=Python]{#1}}
+
+% inline code blocks
+\newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
+
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
+left=2pt, bottom=2pt, right=2pt, colback=gray!25, colframe=white,
+fontupper={\ttfamily\mystrut}}
+
+\title{A Basic Project Template\\{\normalsize Use freely in all assignments}}
+\author{V. Markos\\{\normalsize Mediterranean College}}
+\date{\today}
+
+\begin{document}
+	%
+	\maketitle
+	%
+	\begin{abstract}
+		Each self--respecting project should have an appropriate abstract. Use this piece of text to summarize in a few words what follows. Typically, 80 to 200 words should suffice for this purpose. Abstracts should be typeset in 9pt size Linux Libertine font, centered.
+	\end{abstract}
+	%
+	%
+	%
+	\section{Introduction}
+	%
+	Design and typesetting are quite hard but rewarding tasks \cite{Lupton2024-ik}. It is often said that \emph{style} should be a common guide in any design decisions one might make \cite{tufte2001}. This template takes into account none of the above, but provides a simple yet elegant template for your projects. You can use this document as a starting point to write your project reports or just copy the configuration found in subsequent sections into any text editing tool you prefer\footnote{This is a footnote aiming to showcase how your footnotes should look like, sized at 8pt.}.
+	%
+	%
+	%
+    \section{Text Style Configuration}\label{sec:Page Layout}
+    %
+    One of the first things we should discuss is how text should appear, in general, across your report.
+    %
+    %
+    %
+    \subsection{Page Settings}\label{subsec:Page Settings}
+    %
+    This document is designed with the following page configurations:
+    \begin{itemize}
+    	\item Paper type: A4.
+    	\item Font size: 11pt.
+    	\item Font: Linux Libertine.
+    	\item Typewriter font: Computer Modern Monospace.
+    	\item Margins:
+    	\begin{itemize}
+    		\item Top: 1.0 inches.
+	    	\item Right: 1.6 inches.
+	    	\item Bottom: 1.0 inches.
+       		\item Left: 1.6 inches.
+    	\end{itemize}
+    	\item Head height: 12pt.
+    	\item Head separator: 25pt.
+    \end{itemize}
+	For more, consult Appendix~\ref{app:a}.
+	%
+	%
+	%
+	\subsection{Headings And Styles}\label{subsec:Headings and Styles}
+	%
+	All section headings should be numbered, starting from 1 and increasing by a step of 1. Exceptions to this rule might include a single 0--numbered first section, serving as a preface or an ``Introduction to Introduction'' section. As for case, section headings capitalisation, it should conform to a style of your liking, e.g., APA, Chicago, full capitalisation, sentence case, and so on \cite{fitria2024capitalization}.
+	
+	Subsections and sub--subsections should also be numbered using a nested numbering, prefixed by all higher level numbers, so the first subsection of Section~2 should be numbered as 2.1, its first (sub)subsection as 2.1.1 and so on\footnote{Avoid going deeper than the sub--subsection level, as this might indicate that your content structure is too elaborate.}. As for font sizes:
+	\begin{itemize}
+		\item Section headings should be set at 14.4pt.
+		\item Subsection headings should be set at 12pt.
+		\item Sub--subsection headings should be set at 11pt.
+	\end{itemize}
+	
+	\paragraph{For further subsectioning} you\marginpar{This is a cute (?) margin paragraph, where you might want to add some not so important but cool information about the main content of your text. It should be sized at 6/7pt and use Libertine Sans Serif font, to be easily distinguishable from the main text, not distracting from it.} might consider the use of unnumbered paragraphs, as this one you are reading at the moment, which I am trying to make a bit longer, but, as you might well have realised by now, I am failing to do so. In any case, you get the point. The first few (maybe just one) starting words should be typeset in boldface and no indentation should be used.
+	%
+	%
+	%
+	\section{Special Formatting}\label{sec:Special Formatting}
+	%
+	In this section we briefly present how specially formatted text should be\ldots, well, formatted.
+	%
+	%
+	%
+	\subsection{Math Text}
+	%
+	Math text can be included either inline, e.g., $e^{i\pi}+1=0$, which, by the way, is the famous \textit{Euler formula}, or in display mode:
+	\[\int_0^1x^2=\frac{1}{3}.\]
+	In case you need to number equations, equation numbers should be preceded by section number, separated by a dot, as in Equation~\eqref{eq:cool}:
+	\begin{equation}\label{eq:cool}
+		\sum_{k=1}^\infty\frac{1}{k^2}=\frac{\pi^2}{6}.
+	\end{equation}
+	Any references to equations should be in parentheses, preceded by the word ``Equation''.
+	%
+	%
+	%
+	\subsection{Code Snippets}\label{subsec:Code Snippets}
+	%
+	You can insert code in your text either inline, e.g., as in \code{x = lambda x: x + 1} or as a larger code block, e.g., as the one shown below:
+	
+    \lstinputlisting[language=Python]{assets/main.py}
+
+    In any case, you should use a monospace font, preferably Computer Modern Monospace. In the case of inline code snippets, you should wrap code around in a box with rounded corners and a light gray background (or any fit choice of your liking) while you should use a semantic colour palette of your liking, as the one presented above.
+    %
+    %
+	%
+	\section{Figures And Listings}\label{sec:Figures and Listings}
+	%
+	Another common feature of a project report are figures and miscellaneous listings.
+	%
+	%
+	%
+	\subsection{Figures}\label{subsec:Figures}
+	%
+	Any included figures should always be properly captured and numbered, using ``Figure'', as a prefix. Referencing in text should have one of the two forms:
+	\begin{itemize}
+		\item Figure~\ref{fig:example} for inline figure references, or;
+		\item if you would like to reference a nice figure (Fig.~\ref{fig:example}), you should use parentheses and the shorter ``Fig.'' prefix.
+	\end{itemize}
+
+	\begin{figure}[!tb]
+		\centering
+		\includegraphics[width=0.4\textwidth]{assets/images/placeholder.png}
+		\caption{A shockingly nice placeholder image. Figure captions should be style in Libertine Sans Serif font, using 8pt size, with the Figure caption header in boldface font, separated by the caption text by a semicolon. Captions shorter than one line should be centered while larger ones should be fully justified.}
+		\label{fig:example}
+	\end{figure}
+
+	As for figure alignment, they should be placed the closest possible to their first reference, but not in the middle of the page; either page top or page bottom should be preferred in all cases. Also, center alignment should be preferred over left and right ones, besides cases where non--center alignment contributes to the impact of the included image. As for image types, prefer scalable forms (SVG, EPS, PDF) over non--scalable ones (PNG, JPG / JPEG).
+	%
+	%
+	%
+	\subsection{Listings}\label{subsec:Listings}
+	%
+	Besides figures, you might need to include several numbered listings in your work, like Listing~\ref{lst:example}. You should, in general, follow the same rules as with figures, with the exception that, up to your liking, you might also consider in--place inclusion of listings, besides top-- and bottom--page alignment.
+	
+	\begin{lstlisting}[language=Python, caption={A small, centered, listing caption.}, label={lst:example}]
+# Will this print "You won!" on your computer?
+x = 1.0
+while x > 0.0:
+	x = x / 2
+print("You won!")
+	\end{lstlisting}
+	%
+	%
+	%
+    \section{Referencing And Citations}\label{sec:Referencing and Citations}
+    %
+    All quality works build on top of previous works, which should be properly attributed the credit they deserve. All such mentions should be listed at a separate section at the end of the main part of your document using a simple Author--Title format, right before any appendices. You should use a numbered citation format, enclosed in brackets, pointing to the corresponding entry in the References section.
+	%
+	%
+	%
+	\printbibliography
+	%
+	%
+	%
+	\appendix
+	\clearpage\newpage
+	%
+	\section{Page Layouts}\label{app:a}
+	%
+	This is a very important appendix. All appendices should be enumerated with special capital--case letters to be distinguished by sections. They should also start on a new page, with no other content above the first appendix. As for this appendix's content, in Figure~\ref{fig:ptrs} you can see the same information as in Section~\ref{sec:Page Layout}, just more condensed.
+	
+	\begin{figure}[!htb]
+		\setlayoutscale{0.45}
+		\currentpage
+		\pagedesign
+		\caption{Page layout values for this document} \label{fig:ptrs}
+	\end{figure}
+	%
+	%
+	%
+\end{document}
+

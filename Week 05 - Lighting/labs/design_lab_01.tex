@@ -1,0 +1,207 @@
+% !TeX spellcheck = en_GB
+\documentclass[a4paper]{tufte-handout}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[tt=false]{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+%\usepackage[colorlinks, linkcolor=black]{hyperref}
+
+%\addbibresource{references.bib}
+
+%\numberwithin{equation}{section}
+
+\DeclareCaptionFormat{custom}
+{%
+	{\sf\footnotesize\textbf{#1#2}{#3}}
+}
+\captionsetup{format=custom}
+
+% Margin paragraphs
+%\let\oldmarginpar\marginpar
+%\setlength\marginparwidth{3cm}
+%\renewcommand{\marginpar}[1]{\oldmarginpar{\flushleft\tiny\sf{#1}}}
+
+% Colors
+\definecolor{primary}{HTML}{5080da}
+\definecolor{secondary}{HTML}{da8050}
+
+% tikz definitions
+\tikzset{leaf node/.style = {rectangle, draw=black, minimum width = 0.5cm, minimum height = 0.5cm}}
+\tikzset{internal node/.style = {circle, draw=black, minimum width = 0.5cm}}
+
+% Theorems
+\newtcbtheorem{definition}{Definition}{colback=primary!5, colframe=primary, fonttitle=\bfseries}{def}
+\newtcbtheorem{alert}{Alert}{colback=secondary!5, colframe=secondary, fonttitle=\bfseries}{alert}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Custom commands
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\hint}{\textit{Hint:}~}
+\newcommand{\inlcd}[1]{\lstinline[language=Python]{#1}}
+
+% inline code blocks
+\newcommand\mystrut{\rule[-1pt]{0pt}{.8em}}
+
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=2pt,
+	left=2pt, bottom=2pt, right=2pt, colback=gray!25, colframe=white,
+	fontupper={\ttfamily\mystrut}}
+
+% Tikz settings
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+
+\tikzset{
+	list/.style={
+		matrix of math nodes,
+		nodes in empty cells,
+	},
+}
+
+\title{Virtual Environment Development\\{\normalsize Design Lab 01}}
+\author{V. Markos\\{\normalsize Mediterranean College}}
+\date{}
+
+\begin{document}
+	%
+	\maketitle
+	%
+	\begin{abstract}
+		In this lab series we gradually build a (part) of the legendary \emph{Zork I: The Great Underground Empire} map, focusing on both environment design and gameplay aspects. You can follow any part of these lab series either as stated here, or by properly mapping the instructions to your idea for your semester project. This week, we start by getting accustomed with the game, while creating a comprehensive map and layout of our environment.
+	\end{abstract}
+	%
+	%
+	%
+	\section{Warm Up}\label{sec:warm up}
+	%
+	\begin{marginfigure}
+		\centering
+		\includegraphics[width=\linewidth]{assets/Zork_I_box_art.jpg}
+		\caption{Zork I cover art. Even at the game's cover, there are hints about the game and its plot, indicating a wildly interwoven game design. Source: \href{https://en.wikipedia.org/wiki/Zork}{https://en.wikipedia.org/wiki/Zork}.}
+		\label{fig:zork box art}
+	\end{marginfigure}
+	
+	Have you ever played any of the Zork series games? If not, then now it is the time to do so! You can find faithful revivals of the game on various places, such as \href{https://www.pcjs.org/software/pcx86/game/infocom/zork1/}{https://www.pcjs.org/software/pcx86/game/infocom/zork1/}. Take a handful of minutes to get accustomed to the game, its narrative, the environment and so on.
+	
+	\begin{exercise}\label{ex:conceptual map}
+		Pick a part of the environment you found interesting and, by replaying\footnote{Replaying the game to reach some deep underworld parts of the game or solving all riddles might be too much for a single lab session. So, you might take a nice shortcut by reading through the game transcript, found in \href{assets/ZORK_I_transcript.html}{assets/ZORK\_I\_transcript.html}} that part of the game, try to create a draft top--down view of the environment. Stay abstract, so feel free to just draw a conceptual map. Among others, you might consider a graph--based representation, i.e.:
+		\begin{itemize}
+			\item use \emph{nodes} labelled by Zork--related names for the key places your environment is going to include, e.g., ``Kitchen'', ``Troll Room'' and so on;
+			\item use \emph{directed edges} to connect the aforementioned nodes, also indicating the direction of movement, to ensure consistency with the original game.
+		\end{itemize}
+		In any case, your draft design should respect the topology implied by the original game!
+	\end{exercise}
+
+	After completing Exercise~\ref{ex:conceptual map} you should have a rough idea of how the environment you are going to design should look at a really abstract level. This is really important as the work we are doing at the moment will serve as a blueprint when crafting the actual environment in the next steps. Speaking of next steps:
+	
+	\begin{exercise}\label{ex:2d map}
+		Start by mapping the conceptual graph designed in Exercise~\ref{ex:conceptual map} into an actual top--down map of the game. Use pen(cil) and paper or any drawing tool you enjoy most. Make\marginnote{Back and forth is a commonality in the design process, especially at these early stages. So, feel free to swing a bit between your choices. However, too much usually means you should take time to think of your design choices again.} sure that you follow the logical and spatial connections you spotted in your conceptual graph --- or revise it accordingly, if needed. Moreover, this is the time to make some important decisions, as we pass from text to more concrete mappings:
+		\begin{itemize}
+			\item For example, in Zork, moving from the kitchen to the living room is ``instant''. How are you going to separate those two rooms?
+			\begin{itemize}
+				\item Are they \emph{adjacent}, i.e., sharing a wall?
+				\item Are they \emph{proximate}, i.e., connect through a hallway or a closed door?
+			\end{itemize}
+			There is no correct answer, in principle, but the way an environment is designed does affect the way the game is played and experienced. So, take some time at this moment to reflect on choices like the above.
+			\item \emph{Scale} is\marginnote{There have been a lot of spoilers so far, and more to come as we proceed with our labs, so, you might want to spend your next weekend exploring Zork unspoiled\ldots} also something to be considered at this point. How large is the ``Main Hall''? How large is the ``Kitchen''? What about the ``Chasm''? Make concrete decisions on room sizes and make them visible on your map.
+			\item \emph{Verticality} is another thing that will often come up during this stage. Two dimensional mapping of vertical movement is, in general, implemented by layering the map and having some indicators\footnote{$\oplus$ looks like a (physical) arrow's feather tail seen from behind and, accordingly, $\odot$ looks like an arrow's point shot directly at us.} for upwards / downwards movement, e.g., $\oplus$ for downwards and $\odot$ for upwards.
+		\end{itemize}
+	\end{exercise}
+
+	\section{Layout}\label{sec:layout}
+	%
+	So far you should have a good understanding of the environment at an abstract level. The information gathered so far is enough to design a proper and complete layout diagram, which is something you might have almost or completely accomplished as you draft out your 2D map for Exercise~\ref{ex:2d map}.
+	
+	\begin{exercise}\label{ex:layout}
+		Using all you have noted and drafted in Section~\ref{sec:warm up}, create the layout diagram for the portion of Zork I's environment you are going to design. Focus on the following aspects for your final design:
+		\begin{itemize}
+			\item Scale and sizing should be clearly reflected on your design, both by the design itself and as clear indications, e.g., through labels, or as a map legend.
+			\item Labelling is your friend! Use labels to indicate entry points, connections between the various spaces and for anything you might feel  needs further elaboration.
+			\item Use some visual indicators for key elements of the environment, e.g., ``grating'', or the ``small brick building'' and so on.
+		\end{itemize}
+		Using the above, you should deliver a full--fledged layout diagram, ready to be materialised using Unreal Engine! 
+	\end{exercise}
+	%
+	%
+	%
+	\section{Blockout}\label{sec:block out}
+	%
+	So far, we have a useful blueprint, but it's time we got our hands dirty with Unreal Engine\footnote{A really comprehensive guide on how to run Unreal Engine (minus some features we will not explore for a while) on really low--end machines: \href{https://vagon.io/blog/how-to-run-unreal-engine-on-a-low-end-device-even-without-gpu}{https://vagon.io/blog/how-to-run-unreal-engine-on-a-low-end-device-even-without-gpu}.}! For this and any upcoming labs in this series, we will assume working on Unreal Engine (UE) 5.x, so make any necessary steps towards installing the appropriate version of the engine.
+	
+	\begin{exercise}\label{ex:blockout setup}
+		First things first: open up your UE editor and create a new Blank or Third Person project. Then:
+		\begin{itemize}
+			\item Introduce a Third Person Character Blueprint into the scene, or just use a Capsule (Cylinder) mesh set to \SI{180}{\centi\metre}. This will serve as a scaling measure to judge environment scaling every time a modification is made, so, make sure to keep it visible!
+			\item Spot the world's origin, $O(0,0,0)$, which will serve as the place from where the first room of the level will be blocked out.
+		\end{itemize}
+	\end{exercise}
+
+	\begin{table}[!tb]
+		\centering
+		\begin{tabular}{p{0.2\linewidth}p{0.4\linewidth}p{0.3\linewidth}}
+			\toprule
+			\textbf{Principle} & \textbf{Detail} & \textbf{Zork Example} \\\midrule
+			Connectivity & Ensure movement between rooms is possible and matches the directional exits from the Zork map (e.g., North, Down). & A ``North'' exit from the Kitchen must lead immediately into the Living Room space. \\
+			Scale \& Proportion	& Doors must be high enough for the player to pass through; rooms must be proportional to their implied function (e.g., a ``Crypt'' is small; a ``Main Hall'' is large). & A 10m×10m room floor block. A doorway opening of 2.5m high by 1.5m wide.\\
+			Height and Verticality & Use the Z-axis correctly for ``Up'' and ``Down'' movements (e.g., placing the ``Attic'' floor high above the "Bedroom" floor). & A staircase or shaft geometry must connect the two floors, with the proper spatial separation. \\
+			Collision & Crucial: Test often. The player character must be able to walk through the environment without getting stuck or falling through the floor. & Run the game frequently to jump, walk, and verify all pathways work.\\\bottomrule
+		\end{tabular}
+		\caption{Some common blocking principles you might find useful bearing in mind while blocking out your level.}
+		\label{tab:blockout principles}
+	\end{table}
+
+	After a basic engine setup has been completed, the next step to actually add some models in the scene. There are primarily two ways of doing so in UE5:
+	\begin{itemize}
+		\item \emph{Brush Actors (BSP),} accessible from the \emph{Geometry} tools. They offer an easier interface to interact and finely carve doorways on walls and such, through \emph{Geometry Editing Mode}, so they are a good starting point to generate some block--outs quickly.
+		\item Simple Static Meshes, which can be used to place basic models, e.g., from \emph{Starter Content} or through \emph{Modelling Tools}. The good thing with static meshes is that it is easy to replace with the actual asset meshes that will be used in the Greybox, so it might be a good idea to use them for your final version of the blockout.
+	\end{itemize}
+
+	\begin{exercise}
+		Start blocking out your level, also keeping in mind the design principles discussed in Table~\ref{tab:blockout principles}. One possible workflow might be to use BSP to create a few designs that you might consider as plausible and then, after any necessary modifications, use actual static meshes to create the environment for your game. Do not focus that much on detail as on properly mapping the concepts from your layout diagram appropriately to the environment, maintaining the Zork feel as much as possible.
+	\end{exercise}
+	%
+	%
+	%
+\end{document}
+
